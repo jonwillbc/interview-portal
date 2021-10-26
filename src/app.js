@@ -37,8 +37,8 @@ app.get('/interviewer', (req, res) => {
 })
 
 app.get('/applicant', (req, res) => {
-    res.render('help', {
-        title: 'Help',
+    res.render('applicant', {
+        title: 'Applicant',
         name: 'Jonathan Williams and Luke Stubbs'
     })
 })
