@@ -3,21 +3,35 @@
 <html>
 
 <head>
-    <title>About</title>
+    <title>Interviewer</title>
     <link rel="icon" href="/img/weather.png">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    <div class="main-content">
-        {{>header}}
-        <p>This is where interviewers will be able to browse submitted applications.</p>
+    <div class="flex-container">
+
+        <div class = "flex-child list" id = 'list' width = "200px"></div>>
+        <div class = "flex-child info" id = 'info'>
+            <embed
+                src=""
+                type="application/pdf"
+                frameBorder="0"
+                scrolling="auto"
+                height="80%"
+                width="100%"
+            ></embed>
+            <p id = 'name'></p>
+            <p id = 'phone'></p>
+            <p id = 'email'></p>
+        </div>
         <form action = "/">
-            <input type="submit" value="Back to home">
+            <br><input type="submit" value="Back to home">
         </form>
     </div>
     
-    {{>footer}}
+
+    <script src="/js/viewApps.js"></script>
 </body>
 
 </html>

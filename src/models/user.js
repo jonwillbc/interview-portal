@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     PIN: {
-        type: Number,
+        type: Number
     }
 })
 

@@ -53,3 +53,37 @@ button {
     color: white;
     padding: 8px;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    border: 2px solid yellow;
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+} 
+
+#list button {
+    width: 260px;
+    cursor: pointer;
+    border: 1px solid #888888;
+    background: #888888;
+    color: white;
+    padding: 8px;
+}
+
+#info{
+    flex-basis: 600px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 550px
+}
+
+#info p{
+    display: inline-block;
+    margin-right: 20px;
+}

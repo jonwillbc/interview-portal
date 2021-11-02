@@ -12,17 +12,22 @@
     <div class="main-content">
         {{>header}}
 
-        <form action = "/interviewer">
-            <input type="submit" value="Interviewers">
-        </form>
+        <p>Applicants</p>
         <form action = "/applicant">
-            <input type="submit" value="Applicants">
+            <input type="submit" value="Enter">
         </form>
+        <p>Interviewers</p>
+        <form>
+            <input id="auth" placeholder="Input PIN">
+            <button>Enter</button>
+        </form>
+
+        <p id="message-1"></p>
+        
     </div>
 
     {{>footer}}
-
-    
+    <script src="/js/app.js"></script>
 </body>
 
 </html>

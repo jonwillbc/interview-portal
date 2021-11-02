@@ -3,23 +3,23 @@ const express = require('express')
 const hbs = require('hbs')
 require('./db/mongoose')
 const User = require('./models/user')
+const Application = require('./models/application')
 //const userRouter = require('./routers/user')
 //const taskRouter = require('./routers/task')
 
 const app = express()
 const port = process.env.PORT || 3000
 
-/*const me = new User({
-    name: 'John',
-    PIN: 87654321
-   })
-
-me.save().then(() => {
-    console.log(me)
-}).catch((error) => {
-    console.log('Error!', error)
-})*/
-
+const multer = require('multer')
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './applications');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + '.pdf');
+    },
+  });
+  var upload = multer({ storage: storage });
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -55,8 +55,6 @@ app.get('/applicant', (req, res) => {
     })
 })
 
-
-
 app.get('/users', async (req, res) => {
     if (!req.query.pin) {
         return res.send({
@@ -71,17 +69,29 @@ app.get('/users', async (req, res) => {
     }
 })
 
-app.get('/products', (req, res) => {
-    if (!req.query.search) {
-        return res.send({
-            error: 'You must provide a search term'
-        })
-    }
-
-    console.log(req.query.search)
-    res.send({
-        products: []
+app.post('/application', upload.single('upload'), async (req, res) => {
+    const app = new Application({
+        name: req.body.name,
+        phone: req.body.phone,
+        email: req.body.email,
+        filepath: req.file.path
     })
+    app.save()
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
+    res.render('thanks', {
+        title: 'Application Submitted',
+        name: 'Jonathan Williams and Luke Stubbs'
+    })
+})
+
+app.get('/applicants', async (req, res) => {
+    try {
+        const apps = await Application.find({})
+        res.send(apps)
+    } catch (e) {
+        res.status(500).send()
+    }
 })
 
 app.get('/help/*', (req, res) => {
