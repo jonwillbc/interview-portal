@@ -1,12 +1,24 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+require('./db/mongoose')
+const User = require('./models/user')
 //const userRouter = require('./routers/user')
 //const taskRouter = require('./routers/task')
 
 const app = express()
 const port = process.env.PORT || 3000
 
+/*const me = new User({
+    name: 'John',
+    PIN: 87654321
+   })
+
+me.save().then(() => {
+    console.log(me)
+}).catch((error) => {
+    console.log('Error!', error)
+})*/
 
 
 // Define paths for Express config
@@ -43,30 +55,20 @@ app.get('/applicant', (req, res) => {
     })
 })
 
-app.get('/weather', (req, res) => {
-    if (!req.query.address) {
+
+
+app.get('/users', async (req, res) => {
+    if (!req.query.pin) {
         return res.send({
-            error: 'You must provide an address!'
+            error: 'You must provide a PIN!'
         })
     }
-
-    geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
-        if (error) {
-            return res.send({ error })
-        }
-
-        forecast(latitude, longitude, (error, forecastData) => {
-            if (error) {
-                return res.send({ error })
-            }
-
-            res.send({
-                forecast: forecastData,
-                location,
-                address: req.query.address
-            })
-        })
-    })
+    try{
+        const user = await User.findPIN(req.query.pin)
+        res.send({ user })
+    } catch (e){
+        res.status(400).send()
+    }
 })
 
 app.get('/products', (req, res) => {
@@ -85,7 +87,7 @@ app.get('/products', (req, res) => {
 app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Andrew Mead',
+        name: 'Jonathan Williams and Luke Stubbs',
         errorMessage: 'Help article not found.'
     })
 })
@@ -93,7 +95,7 @@ app.get('/help/*', (req, res) => {
 app.get('*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Jonathan Williams',
+        name: 'Jonathan Williams and Luke Stubbs',
         errorMessage: 'Page not found.'
     })
 })
