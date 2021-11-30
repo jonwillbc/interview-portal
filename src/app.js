@@ -102,6 +102,15 @@ app.get('/applicants', async (req, res) => {
     }
 })
 
+app.post('/positions',  async (req, res) => {
+    const pos = new Position({
+        name: req.body.name
+    })
+    pos.save()
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
+})
+
 app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404',

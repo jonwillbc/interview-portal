@@ -23,9 +23,9 @@ fetch('/applicants').then((response) => {
                 const fp = 'applications/' + apps[i].filepath.replace('public\\applications\\','')
                 //console.log(fp)
                 pdf[0].setAttribute("src", fp)
-                document.getElementById('name').innerHTML += apps[i].name
-                document.getElementById('phone').innerHTML += apps[i].phone
-                document.getElementById('email').innerHTML += apps[i].email
+                document.getElementById('name').innerHTML = apps[i].name
+                document.getElementById('phone').innerHTML = apps[i].phone
+                document.getElementById('email').innerHTML = apps[i].email
             }
         }
     })

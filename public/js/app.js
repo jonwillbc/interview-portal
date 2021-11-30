@@ -23,5 +23,5 @@ button.addEventListener('click', (e) => {
             }
         })
     })
-    messageOne.textContent = 'Invaliid PIN' 
+    messageOne.textContent = 'Invalid PIN' 
 })

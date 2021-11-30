@@ -9,10 +9,20 @@ const appSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
+        validate(value) {
+            if (!validator.isMobilePhone(value, 'en-US')) {
+                throw new Error('Phone number is invalid')
+            }
+        },
         required: true
     },
     email:{
         type: String,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error('Email is invalid')
+            }
+        },
         required: true
     },
     filepath:{
