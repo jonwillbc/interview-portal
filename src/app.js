@@ -13,13 +13,21 @@ const port = process.env.PORT || 3000
 const multer = require('multer')
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './applications');
+      cb(null, './public/applications');
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now() + '.pdf');
     },
   });
   var upload = multer({ storage: storage });
+
+const testUser = new User({
+    name: 'test',
+    PIN: 12345678
+})
+testUser.save()
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')

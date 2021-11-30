@@ -20,7 +20,7 @@ fetch('/applicants').then((response) => {
         });
         for (let i = 0; i < apps.length; i++) {
             document.getElementById(i).onclick = function() {
-                const fp = 'applications/' + apps[i].filepath.replace('applications\\','')
+                const fp = 'applications/' + apps[i].filepath.replace('public\\applications\\','')
                 //console.log(fp)
                 pdf[0].setAttribute("src", fp)
                 document.getElementById('name').innerHTML += apps[i].name
