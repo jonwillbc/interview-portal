@@ -4,11 +4,14 @@ const hbs = require('hbs')
 require('./db/mongoose')
 const User = require('./models/user')
 const Application = require('./models/application')
+const Position = require('./models/position')
+const bodyParser = require('body-parser');
 //const userRouter = require('./routers/user')
 //const taskRouter = require('./routers/task')
 
 const app = express()
 const port = process.env.PORT || 3000
+app.use(bodyParser.json());
 
 const multer = require('multer')
 var storage = multer.diskStorage({
@@ -21,13 +24,14 @@ var storage = multer.diskStorage({
   });
   var upload = multer({ storage: storage });
 
-const testUser = new User({
+/*const testUser = new User({
     name: 'test',
     PIN: 12345678
 })
 testUser.save()
         .then(response => console.log(response))
         .catch(err => console.error(err))
+*/
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -78,11 +82,31 @@ app.get('/users', async (req, res) => {
 })
 
 app.post('/application', upload.single('upload'), async (req, res) => {
+    //console.log(req.body)
     const app = new Application({
+        position: req.body.position,
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
         filepath: req.file.path
+    })
+    app.save()
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
+    res.render('thanks', {
+        title: 'Application Submitted',
+        name: 'Jonathan Williams and Luke Stubbs'
+    })
+})
+
+app.post('/applicationTest', upload.single('upload'), async (req, res) => {
+    //console.log(req.body)
+    const app = new Application({
+        position: req.body.position,
+        name: req.body.name,
+        phone: req.body.phone,
+        email: req.body.email,
+        filepath: req.body.filepath
     })
     app.save()
         .then(response => console.log(response))
@@ -102,13 +126,24 @@ app.get('/applicants', async (req, res) => {
     }
 })
 
-app.post('/positions',  async (req, res) => {
-    const pos = new Position({
-        name: req.body.name
-    })
-    pos.save()
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
+app.get('/position',  async (req, res) => {
+    if (!req.query.name) {
+        return res.status(401).send({
+            error: 'You must provide a Name!'
+        })
+    }
+
+    const posi = await Position.addPos(req.query.name)
+    res.status(200).send()
+})
+
+app.get('/positions',  async (req, res) => {
+    try {
+        const pos = await Position.find({})
+        res.send(pos)
+    } catch (e) {
+        res.status(500).send()
+    }
 })
 
 app.get('/help/*', (req, res) => {
@@ -127,6 +162,8 @@ app.get('*', (req, res) => {
     })
 })
 
-app.listen(port, () => {
+/*app.listen(port, () => {
     console.log('Server is up on port ' +port+'.')
-})
+})*/
+
+module.exports = app

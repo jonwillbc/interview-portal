@@ -11,7 +11,9 @@
 <body>
     <div class="flex-container">
 
-        <div class = "flex-child list" id = 'list' width = "200px"></div>>
+        <div class = "flex-child list" id = 'list' width = "200px">
+            <h2>Applicants</h2>
+        </div>
         <div class = "flex-child info" id = 'info'>
             <embed
                 src=""
@@ -21,9 +23,19 @@
                 height="80%"
                 width="100%"
             ></embed>
+            <p id = 'position'></p>
             <p id = 'name'></p>
             <p id = 'phone'></p>
             <p id = 'email'></p>
+        </div>
+        <div class = "flex-child other">
+            <div class = "positions">
+                <div id = "pos-list">
+                    <h2>Positions</h2>
+                </div>
+                <input type="text" id="position" placeholder = 'Position'/>
+                <button id = "posButton">Submit</button>
+            </div>
         </div>
         <form action = "/">
             <br><input type="submit" value="Back to home">
@@ -31,7 +43,8 @@
     </div>
     
 
-    <script src="/js/viewApps.js"></script>
+    <script src="/js/viewData.js"></script>
+    <script src="/js/pos.js"></script>
 </body>
 
 </html>

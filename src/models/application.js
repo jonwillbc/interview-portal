@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const appSchema = new mongoose.Schema({
+    position: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true,
@@ -10,7 +14,7 @@ const appSchema = new mongoose.Schema({
     phone: {
         type: String,
         validate(value) {
-            if (!validator.isMobilePhone(value, 'en-US')) {
+            if (!validator.isMobilePhone(value)) {
                 throw new Error('Phone number is invalid')
             }
         },
@@ -27,7 +31,6 @@ const appSchema = new mongoose.Schema({
     },
     filepath:{
         type: String,
-        required: true
     }
 })
 

@@ -9,5 +9,16 @@ const positionSchema = new mongoose.Schema({
     }
 })
 
+positionSchema.statics.addPos = async (name) => {
+    const posi = new Position({
+        name: name
+    })
+    posi.save()
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
+
+    return posi
+}
+
 const Position = mongoose.model('Position', positionSchema)
 module.exports = Position
