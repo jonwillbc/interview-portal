@@ -155,6 +155,7 @@ app.post('/schedule', async (req, res) => {
     app.save()
         .then(response => console.log(response))
         .catch(err => console.error(err))
+    res.render('interviewer')
 })
 
 app.get('/appointments',  async (req, res) => {
