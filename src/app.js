@@ -6,12 +6,11 @@ const User = require('./models/user')
 const Application = require('./models/application')
 const Position = require('./models/position')
 const bodyParser = require('body-parser');
-//const userRouter = require('./routers/user')
-//const taskRouter = require('./routers/task')
+const Appointment = require('./models/appointment')
 
 const app = express()
 const port = process.env.PORT || 3000
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 const multer = require('multer')
 var storage = multer.diskStorage({
@@ -144,6 +143,39 @@ app.get('/positions',  async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
+})
+
+app.post('/schedule', async (req, res) => {
+    //console.log(req.body)
+    const app = new Appointment({
+        name: req.body.name,
+        date: req.body.date,
+        time: req.body.time
+    })
+    app.save()
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
+})
+
+app.get('/appointments',  async (req, res) => {
+    try {
+        const appo = await Appointment.find({})
+        res.send(appo)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+app.get('/deleteApp',  async (req, res) => {
+    console.log('delete')
+    if (!req.query.id) {
+        return res.status(401).send({
+            error: 'You must provide an ID!'
+        })
+    }
+    //const appo = Appointment.findOne({phone:  req.query.id})
+    await Application.deleteApp(req.query.id)
+    res.render('interviewer')
 })
 
 app.get('/help/*', (req, res) => {

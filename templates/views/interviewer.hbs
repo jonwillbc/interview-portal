@@ -12,6 +12,7 @@
     <div class="flex-container">
 
         <div class = "flex-child list" id = 'list' width = "200px">
+            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
             <h2>Applicants</h2>
         </div>
         <div class = "flex-child info" id = 'info'>
@@ -28,13 +29,24 @@
             <p id = 'phone'></p>
             <p id = 'email'></p>
         </div>
-        <div class = "flex-child other">
+        <div class = "flex-child other" id = 'other'>
             <div class = "positions">
                 <div id = "pos-list">
                     <h2>Positions</h2>
                 </div>
                 <input type="text" id="position" placeholder = 'Position'/>
                 <button id = "posButton">Submit</button>
+            </div>
+            <div class = "schedule">
+                <div id = "sched-list">
+                    <h2>Appointments</h2>
+                </div>
+                <form name="sched-form" id="sched-form" action="/schedule" method="POST">
+                    <input type="text" name="name" placeholder = 'Name'/>
+                    <input type="date" name="date"/>
+                    <input type="time" name="time"/>
+                    <input type="submit" value="Submit"/>
+                </form>
             </div>
         </div>
         <form action = "/">

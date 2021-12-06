@@ -1,6 +1,7 @@
 const list = document.getElementById("list")
 const pdf = document.getElementsByTagName('embed')
 const posList = document.getElementById("pos-list")
+const appoList = document.getElementById("sched-list")
 //console.log(pdf)
 
 //get applicants
@@ -13,9 +14,9 @@ fetch('/applicants').then((response) => {
         let count = 0
         apps = data
         console.log(apps)
-        count = 0
         console.log(count.toString())
         apps.forEach(element => {
+            let id = element.phone
             let idStr = count.toString();
             list.innerHTML += 
               "<button type = 'submit' id = '"+idStr+"'>"+element.name+"</button><br><br>"
@@ -60,6 +61,23 @@ fetch('/positions').then((response) => {
         pos.forEach(element => {
             posList.innerHTML += 
               "<p>"+element.name+"</p>"
+        });
+    } )  
+})
+
+//get appointments
+let appo = []
+fetch('/appointments').then((response) => {
+    if(response.status == 400){
+        console.log('Error receiving appointments')
+    }
+    response.json().then((data) => {
+        appo = data
+        console.log(appo)
+
+        appo.forEach(element => {
+            appoList.innerHTML += 
+              "<p>"+element.name+"; "+element.date+"; "+element.time+"</p>"
         });
     } )  
 })

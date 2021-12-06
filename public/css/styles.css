@@ -75,6 +75,12 @@ button {
     background: #888888;
     color: white;
     padding: 8px;
+    display: inline;
+}
+#list{
+    flex-basis: 260px;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 #info{
@@ -85,7 +91,17 @@ button {
     margin-right: 20px;
 }
 
+#other{
+    flex-basis: 300px;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
 #info p{
     display: inline-block;
     margin-right: 20px;
+}
+
+#options{
+    display: inline;
 }

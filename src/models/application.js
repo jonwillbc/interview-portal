@@ -34,5 +34,10 @@ const appSchema = new mongoose.Schema({
     }
 })
 
+appSchema.statics.deleteApp = async (id) => {
+    Application.findByIdAndRemove(id.toString())
+    return
+}
+
 const Application = mongoose.model('Application', appSchema)
 module.exports = Application
